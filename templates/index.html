@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ComicCraftAI — Generate Comics with Google Gemini</title>
+  <meta name="description" content="Turn your story ideas into stunning AI-generated comic strips. Choose your art style, genre, and panel count — ComicCraftAI does the rest." />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <!-- ── Navbar ──────────────────────────────────────────────────────────── -->
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="navbar-inner">
+      <a href="/" class="navbar-brand" aria-label="ComicCraftAI home">
+        ComicCraftAI
+        <span class="navbar-badge">AI</span>
+      </a>
+      <ul class="navbar-links" role="list">
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="https://ai.google.dev" target="_blank" rel="noopener">Gemini API</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── Hero ────────────────────────────────────────────────────────────── -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-eyebrow" aria-label="Powered by AI">
+      <span>⚡</span> Powered by Google Gemini &amp; Imagen 3
+    </div>
+    <h1 id="hero-title" class="hero-title">BRING STORIES<br>TO LIFE</h1>
+    <p class="hero-subtitle">
+      Type a story idea. Pick your style. Watch AI generate a full comic strip —
+      panels, dialogue, and illustrations — in seconds.
+    </p>
+  </section>
+
+  <!-- ── Generator Form ──────────────────────────────────────────────────── -->
+  <main class="container-sm" id="generator">
+    <div class="glass-card" style="padding: 36px;" role="main">
+
+      <!-- Error banner -->
+      <div id="error-banner" class="error-banner" role="alert" aria-live="polite">
+        <span>⚠️</span>
+        <span id="error-msg">Something went wrong. Please try again.</span>
+      </div>
+
+      <!-- ── Prompt ─────────────────────────────────────────────────────── -->
+      <div class="form-group" style="margin-bottom: 28px;">
+        <label class="form-label" for="story-prompt">Your Story Prompt</label>
+        <textarea
+          id="story-prompt"
+          class="form-textarea"
+          name="prompt"
+          placeholder="A lone samurai discovers a glowing portal beneath a cherry blossom tree, leading to a cyber-futuristic Tokyo..."
+          maxlength="1000"
+          aria-label="Enter your comic story prompt"
+          required
+        ></textarea>
+        <div style="font-size:0.75rem; color:var(--text-muted); text-align:right;">
+          <span id="char-count">0</span>/1000
+        </div>
+      </div>
+
+      <!-- ── Row 1: Genre + Characters ─────────────────────────────────── -->
+      <div class="flex gap-16" style="margin-bottom: 28px; flex-wrap: wrap;">
+        <div class="form-group" style="flex: 1; min-width: 160px;">
+          <label class="form-label" for="genre-select">Genre</label>
+          <select id="genre-select" class="form-select" name="genre" aria-label="Select comic genre">
+            <option value="adventure">🗡️ Adventure</option>
+            <option value="comedy">😄 Comedy</option>
+            <option value="horror">👻 Horror</option>
+            <option value="romance">💖 Romance</option>
+            <option value="sci-fi">🚀 Sci-Fi</option>
+            <option value="fantasy">🧙 Fantasy</option>
+            <option value="mystery">🕵️ Mystery</option>
+            <option value="slice-of-life">☕ Slice of Life</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 2; min-width: 220px;">
+          <label class="form-label" for="characters-input">Characters (optional)</label>
+          <input
+            id="characters-input"
+            class="form-input"
+            type="text"
+            name="characters"
+            placeholder="e.g. Aria (hero), Commander Vex (villain)"
+            aria-label="Enter character names and descriptions"
+          />
+        </div>
+      </div>
+
+      <!-- ── Art Style ──────────────────────────────────────────────────── -->
+      <div class="form-group" style="margin-bottom: 28px;">
+        <label class="form-label">Art Style</label>
+        <div class="style-grid" id="style-grid" role="group" aria-label="Select art style">
+          <div class="style-card selected" data-value="manga" role="radio" aria-checked="true" tabindex="0" aria-label="Manga style">
+            <div class="style-card-icon">🎌</div>
+            <div class="style-card-label">Manga</div>
+          </div>
+          <div class="style-card" data-value="superhero" role="radio" aria-checked="false" tabindex="0" aria-label="Superhero style">
+            <div class="style-card-icon">🦸</div>
+            <div class="style-card-label">Superhero</div>
+          </div>
+          <div class="style-card" data-value="watercolor" role="radio" aria-checked="false" tabindex="0" aria-label="Watercolor style">
+            <div class="style-card-icon">🎨</div>
+            <div class="style-card-label">Watercolor</div>
+          </div>
+          <div class="style-card" data-value="noir" role="radio" aria-checked="false" tabindex="0" aria-label="Noir style">
+            <div class="style-card-icon">🎩</div>
+            <div class="style-card-label">Noir</div>
+          </div>
+          <div class="style-card" data-value="cartoon" role="radio" aria-checked="false" tabindex="0" aria-label="Cartoon style">
+            <div class="style-card-icon">🎪</div>
+            <div class="style-card-label">Cartoon</div>
+          </div>
+          <div class="style-card" data-value="retro" role="radio" aria-checked="false" tabindex="0" aria-label="Retro style">
+            <div class="style-card-icon">📺</div>
+            <div class="style-card-label">Retro</div>
+          </div>
+          <div class="style-card" data-value="anime" role="radio" aria-checked="false" tabindex="0" aria-label="Anime style">
+            <div class="style-card-icon">✨</div>
+            <div class="style-card-label">Anime</div>
+          </div>
+          <div class="style-card" data-value="sketch" role="radio" aria-checked="false" tabindex="0" aria-label="Sketch style">
+            <div class="style-card-icon">✏️</div>
+            <div class="style-card-label">Sketch</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Panel Count ─────────────────────────────────────────────────── -->
+      <div class="form-group" style="margin-bottom: 28px;">
+        <label class="form-label">Number of Panels</label>
+        <div class="panel-count-group" id="panel-count-group" role="group" aria-label="Select number of panels">
+          <div class="panel-count-btn" data-value="3" role="radio" aria-checked="false" tabindex="0">3</div>
+          <div class="panel-count-btn selected" data-value="4" role="radio" aria-checked="true" tabindex="0">4</div>
+          <div class="panel-count-btn" data-value="6" role="radio" aria-checked="false" tabindex="0">6</div>
+          <div class="panel-count-btn" data-value="8" role="radio" aria-checked="false" tabindex="0">8</div>
+        </div>
+      </div>
+
+      <!-- ── Layout Template ────────────────────────────────────────────── -->
+      <div class="form-group" style="margin-bottom: 28px;">
+        <label class="form-label">Layout Template</label>
+        <div class="layout-grid" id="layout-grid" role="group" aria-label="Select page layout">
+          <div class="layout-card" data-value="strip" role="radio" aria-checked="false" tabindex="0" aria-label="Strip layout">
+            <div class="layout-icon strip">
+              <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            </div>
+            <div class="layout-label">Strip</div>
+          </div>
+          <div class="layout-card selected" data-value="classic" role="radio" aria-checked="true" tabindex="0" aria-label="Classic layout">
+            <div class="layout-icon classic">
+              <div class="cell"></div><div class="cell"></div>
+              <div class="cell"></div><div class="cell"></div>
+            </div>
+            <div class="layout-label">Classic</div>
+          </div>
+          <div class="layout-card" data-value="story" role="radio" aria-checked="false" tabindex="0" aria-label="Story layout">
+            <div class="layout-icon story">
+              <div class="cell"></div><div class="cell"></div>
+              <div class="cell"></div><div class="cell"></div>
+              <div class="cell"></div><div class="cell"></div>
+            </div>
+            <div class="layout-label">Story</div>
+          </div>
+          <div class="layout-card" data-value="feature" role="radio" aria-checked="false" tabindex="0" aria-label="Feature layout">
+            <div class="layout-icon feature">
+              <div class="cell"></div>
+              <div class="cell"></div><div class="cell"></div>
+            </div>
+            <div class="layout-label">Feature</div>
+          </div>
+          <div class="layout-card" data-value="dense" role="radio" aria-checked="false" tabindex="0" aria-label="Dense layout">
+            <div class="layout-icon dense">
+              <div class="cell"></div><div class="cell"></div>
+              <div class="cell"></div><div class="cell"></div>
+              <div class="cell"></div><div class="cell"></div>
+              <div class="cell"></div><div class="cell"></div>
+            </div>
+            <div class="layout-label">Dense</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Quality Mode ───────────────────────────────────────────────── -->
+      <div class="form-group" style="margin-bottom: 36px;">
+        <label class="form-label">Generation Quality</label>
+        <div class="toggle-group" id="quality-toggle" role="group" aria-label="Select generation quality">
+          <div class="toggle-option active" data-value="flash" tabindex="0" role="radio" aria-checked="true">
+            ⚡ Flash (Fast)
+          </div>
+          <div class="toggle-option" data-value="pro" tabindex="0" role="radio" aria-checked="false">
+            ✨ Pro (Quality)
+          </div>
+        </div>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin-top:8px;">
+          Flash generates in ~30s · Pro takes ~60s but produces richer stories
+        </p>
+      </div>
+
+      <!-- ── Generate Button ────────────────────────────────────────────── -->
+      <button id="generate-btn" class="generate-btn" aria-label="Generate comic" type="button">
+        🎨 &nbsp;GENERATE MY COMIC
+      </button>
+
+    </div><!-- end glass-card -->
+
+    <!-- ── How It Works ───────────────────────────────────────────────── -->
+    <section id="how-it-works" style="padding: 56px 0 40px;" aria-labelledby="hiw-title">
+      <h2 id="hiw-title" class="section-title">How It Works</h2>
+      <div class="flex gap-16" style="flex-wrap: wrap;">
+        <div class="glass-card animate-fade-up" style="flex:1; min-width:200px; padding:24px; text-align:center; delay-100">
+          <div style="font-size:2.5rem; margin-bottom:12px;">✍️</div>
+          <h3 style="font-size:1rem; margin-bottom:8px; font-family:'Bangers',cursive; letter-spacing:0.05em;">1. DESCRIBE</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted);">Type your story idea in plain English. Any genre, any style.</p>
+        </div>
+        <div class="glass-card animate-fade-up delay-200" style="flex:1; min-width:200px; padding:24px; text-align:center;">
+          <div style="font-size:2.5rem; margin-bottom:12px;">🤖</div>
+          <h3 style="font-size:1rem; margin-bottom:8px; font-family:'Bangers',cursive; letter-spacing:0.05em;">2. GENERATE</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted);">Gemini writes the script and Imagen 3 draws every panel.</p>
+        </div>
+        <div class="glass-card animate-fade-up delay-300" style="flex:1; min-width:200px; padding:24px; text-align:center;">
+          <div style="font-size:2.5rem; margin-bottom:12px;">📥</div>
+          <h3 style="font-size:1rem; margin-bottom:8px; font-family:'Bangers',cursive; letter-spacing:0.05em;">3. EXPORT</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted);">Download your comic as PDF, PNG, or a ZIP of all panels.</p>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- end main container -->
+
+  <!-- ── Loading Overlay ─────────────────────────────────────────────────── -->
+  <div id="loading-overlay" class="loading-overlay" role="dialog" aria-live="polite" aria-label="Generating your comic">
+    <div class="loading-spinner" aria-hidden="true"></div>
+    <div style="text-align:center;">
+      <p style="font-family:'Bangers',cursive; font-size:1.8rem; letter-spacing:0.06em; color:var(--accent-light); margin-bottom:6px;">
+        CRAFTING YOUR COMIC
+      </p>
+      <p style="font-size:0.9rem; color:var(--text-muted);">This usually takes 30–60 seconds…</p>
+    </div>
+    <div class="loading-steps" id="loading-steps">
+      <div class="loading-step" id="step-script">
+        <span class="step-icon">📝</span> Writing your comic script…
+      </div>
+      <div class="loading-step" id="step-images">
+        <span class="step-icon">🎨</span> Generating panel illustrations…
+      </div>
+      <div class="loading-step" id="step-layout">
+        <span class="step-icon">📐</span> Assembling layout…
+      </div>
+      <div class="loading-step" id="step-done">
+        <span class="step-icon">✅</span> Almost ready!
+      </div>
+    </div>
+  </div>
+
+  <!-- ── JavaScript ──────────────────────────────────────────────────────── -->
+  <script>
+    // ── State ────────────────────────────────────────────────────────────────
+    let selectedStyle       = 'manga';
+    let selectedPanelCount  = 4;
+    let selectedLayout      = 'classic';
+    let selectedQuality     = 'flash';
+
+    // ── Selection helpers ─────────────────────────────────────────────────────
+    function bindSelector(containerId, onSelect) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.querySelectorAll('[data-value]').forEach(el => {
+        el.addEventListener('click', () => {
+          container.querySelectorAll('[data-value]').forEach(e => {
+            e.classList.remove('selected', 'active');
+            e.setAttribute('aria-checked', 'false');
+          });
+          el.classList.add('selected', 'active');
+          el.setAttribute('aria-checked', 'true');
+          onSelect(el.dataset.value);
+        });
+        el.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+        });
+      });
+    }
+
+    bindSelector('style-grid',        v => selectedStyle      = v);
+    bindSelector('panel-count-group', v => selectedPanelCount = +v);
+    bindSelector('layout-grid',       v => selectedLayout     = v);
+    bindSelector('quality-toggle',    v => selectedQuality    = v);
+
+    // ── Char counter ──────────────────────────────────────────────────────────
+    const promptEl   = document.getElementById('story-prompt');
+    const countEl    = document.getElementById('char-count');
+    promptEl.addEventListener('input', () => { countEl.textContent = promptEl.value.length; });
+
+    // ── Loading steps ─────────────────────────────────────────────────────────
+    const STEPS = ['step-script', 'step-images', 'step-layout', 'step-done'];
+    let stepTimer = null;
+
+    function startStepAnimation() {
+      let idx = 0;
+      function advance() {
+        if (idx < STEPS.length) {
+          document.getElementById(STEPS[idx]).classList.add('active');
+          if (idx > 0) document.getElementById(STEPS[idx - 1]).classList.add('done');
+          idx++;
+          stepTimer = setTimeout(advance, idx === 1 ? 3000 : idx === 2 ? 12000 : 4000);
+        }
+      }
+      advance();
+    }
+
+    function resetSteps() {
+      clearTimeout(stepTimer);
+      STEPS.forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.remove('active', 'done');
+      });
+    }
+
+    // ── Error display ─────────────────────────────────────────────────────────
+    function showError(msg) {
+      const banner = document.getElementById('error-banner');
+      document.getElementById('error-msg').textContent = msg;
+      banner.classList.add('visible');
+      banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function hideError() {
+      document.getElementById('error-banner').classList.remove('visible');
+    }
+
+    // ── Generate ─────────────────────────────────────────────────────────────
+    document.getElementById('generate-btn').addEventListener('click', async () => {
+      const prompt = promptEl.value.trim();
+      if (!prompt) {
+        promptEl.focus();
+        showError('Please enter a story prompt before generating.');
+        return;
+      }
+      if (prompt.length < 10) {
+        promptEl.focus();
+        showError('Story prompt is too short. Please add more detail!');
+        return;
+      }
+
+      hideError();
+
+      const genre      = document.getElementById('genre-select').value;
+      const characters = document.getElementById('characters-input').value;
+
+      // Show loading
+      const overlay = document.getElementById('loading-overlay');
+      overlay.classList.add('visible');
+      resetSteps();
+      startStepAnimation();
+
+      document.getElementById('generate-btn').disabled = true;
+
+      try {
+        const res = await fetch('/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt,
+            genre,
+            art_style:   selectedStyle,
+            panel_count: selectedPanelCount,
+            layout:      selectedLayout,
+            quality:     selectedQuality,
+            characters,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          window.location.href = data.redirect;
+        } else {
+          overlay.classList.remove('visible');
+          resetSteps();
+          document.getElementById('generate-btn').disabled = false;
+          showError(data.error || 'Generation failed. Please try again.');
+        }
+      } catch (err) {
+        overlay.classList.remove('visible');
+        resetSteps();
+        document.getElementById('generate-btn').disabled = false;
+        showError('Network error. Please check your connection and try again.');
+      }
+    });
+  </script>
+
+</body>
+</html>

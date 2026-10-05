@@ -1,0 +1,73 @@
+{
+  "id": "2e674a1f-3104-4fd7-909a-9999d9641d0c",
+  "script": {
+    "id": "93896dac-ca4b-4983-ab65-14ea284530ad",
+    "title": "King of the Whispering Woods",
+    "logline": "A brave lion ventures into a mystical forest to confront an ancient shadow.",
+    "genre": "adventure",
+    "art_style": "anime",
+    "color_palette": "emerald green, sunset gold, amethyst purple, rich amber",
+    "panels": [
+      {
+        "id": "befcef0e-3fd9-4abd-afbf-77eb7a64dac6",
+        "panel_number": 1,
+        "description": "Wide establishing shot in anime style. Leo, a majestic golden-furred lion with a glowing crimson mane, stands defiantly atop a mossy stone looking into the dense, foggy Whispering Woods. Dramatic low angle, sunbeams cutting through the canopy.",
+        "speaker": "Leo",
+        "dialogue": "Ancient forest... show me what you've got.",
+        "caption": "At the edge of the uncharted wild, a new legend begins.",
+        "mood": "mysterious",
+        "characters": [
+          "Leo"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\2e674a1f-3104-4fd7-909a-9999d9641d0c\\panel_01_befcef0e-3fd9-4abd-afbf-77eb7a64dac6.png",
+        "image_url": "/static/generated/2e674a1f-3104-4fd7-909a-9999d9641d0c/panel_01_befcef0e-3fd9-4abd-afbf-77eb7a64dac6.png"
+      },
+      {
+        "id": "cb37d7ed-cf85-4e35-8b23-7e9cab0699cb",
+        "panel_number": 2,
+        "description": "Medium action shot. Swirling purple shadows and glowing blue roots erupt from the forest floor, blocking Leo's path. Leo leaps forward, claws extended, muscles tensed in mid-air with dynamic speed lines.",
+        "speaker": "Leo",
+        "dialogue": "You can't cage the wild!",
+        "caption": "",
+        "mood": "tense",
+        "characters": [
+          "Leo"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\2e674a1f-3104-4fd7-909a-9999d9641d0c\\panel_02_cb37d7ed-cf85-4e35-8b23-7e9cab0699cb.png",
+        "image_url": "/static/generated/2e674a1f-3104-4fd7-909a-9999d9641d0c/panel_02_cb37d7ed-cf85-4e35-8b23-7e9cab0699cb.png"
+      },
+      {
+        "id": "2294b3b7-ecb9-42bb-8d1a-d889262b7fa0",
+        "panel_number": 3,
+        "description": "Close-up of Leo letting out a mighty roar. A shockwave of golden spiritual energy bursts from his mouth, shattering the dark roots into sparkling dust. Extreme dynamic angle, glowing eyes, swirling debris.",
+        "speaker": "Leo",
+        "dialogue": "ROAAAR!",
+        "caption": "Courage is the ultimate weapon.",
+        "mood": "dramatic",
+        "characters": [
+          "Leo"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\2e674a1f-3104-4fd7-909a-9999d9641d0c\\panel_03_2294b3b7-ecb9-42bb-8d1a-d889262b7fa0.png",
+        "image_url": "/static/generated/2e674a1f-3104-4fd7-909a-9999d9641d0c/panel_03_2294b3b7-ecb9-42bb-8d1a-d889262b7fa0.png"
+      },
+      {
+        "id": "fa39b157-cb0f-45f8-9af0-9cf23c4bd5cb",
+        "panel_number": 4,
+        "description": "Peaceful wide shot. The fog parts completely, revealing a breathtaking hidden valley illuminated by magical flora. Leo sits proudly atop a hill, tail swishing calmly, gazing out at his newly claimed horizon as butterflies flutter around him.",
+        "speaker": "",
+        "dialogue": "",
+        "caption": "And so, the darkness bowed to the light.",
+        "mood": "peaceful",
+        "characters": [
+          "Leo"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\2e674a1f-3104-4fd7-909a-9999d9641d0c\\panel_04_fa39b157-cb0f-45f8-9af0-9cf23c4bd5cb.png",
+        "image_url": "/static/generated/2e674a1f-3104-4fd7-909a-9999d9641d0c/panel_04_fa39b157-cb0f-45f8-9af0-9cf23c4bd5cb.png"
+      }
+    ]
+  },
+  "layout_template": "classic",
+  "assembled_image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\2e674a1f-3104-4fd7-909a-9999d9641d0c\\assembled.png",
+  "assembled_image_url": "/static/generated/2e674a1f-3104-4fd7-909a-9999d9641d0c/assembled.png",
+  "created_at": "2026-10-05T17:31:55.025718+00:00"
+}

@@ -1,0 +1,59 @@
+{
+  "id": "773b7736-8676-4c43-b9ea-3035595a8526",
+  "script": {
+    "id": "e6ce35e6-e205-44ff-903c-629ee1524d4d",
+    "title": "a brave lion standing in motain tip",
+    "logline": "a brave lion standing in motain tip",
+    "genre": "adventure",
+    "art_style": "manga",
+    "color_palette": "midnight blue, neon purple, ember amber",
+    "panels": [
+      {
+        "id": "a32aac7b-d7c0-4a66-b66c-38710106a26a",
+        "panel_number": 1,
+        "description": "Panel 1: A vivid manga scene depicting a brave lion standing in motain tip - Stage 1 of the journey.",
+        "speaker": "Protagonist",
+        "dialogue": "We must move forward to panel 1!",
+        "caption": "Part 1 \u2014 The adventure unfolds under a dramatic sky.",
+        "mood": "mysterious",
+        "characters": [
+          "Protagonist"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\773b7736-8676-4c43-b9ea-3035595a8526\\panel_01_a32aac7b-d7c0-4a66-b66c-38710106a26a_r.png",
+        "image_url": "/static/generated/773b7736-8676-4c43-b9ea-3035595a8526/panel_01_a32aac7b-d7c0-4a66-b66c-38710106a26a_r.png"
+      },
+      {
+        "id": "9b21e422-6a27-45e6-a6e9-767bdcd0ab58",
+        "panel_number": 2,
+        "description": "Panel 2: A vivid manga scene depicting a brave lion standing in motain tip - Stage 2 of the journey.",
+        "speaker": "",
+        "dialogue": "",
+        "caption": "Part 2 \u2014 The adventure unfolds under a dramatic sky.",
+        "mood": "tense",
+        "characters": [
+          "Protagonist"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\773b7736-8676-4c43-b9ea-3035595a8526\\panel_02_9b21e422-6a27-45e6-a6e9-767bdcd0ab58.png",
+        "image_url": "/static/generated/773b7736-8676-4c43-b9ea-3035595a8526/panel_02_9b21e422-6a27-45e6-a6e9-767bdcd0ab58.png"
+      },
+      {
+        "id": "94cfb867-1897-43cd-9376-586a6bb041fd",
+        "panel_number": 3,
+        "description": "Panel 3: A vivid manga scene depicting a brave lion standing in motain tip - Stage 3 of the journey.",
+        "speaker": "Protagonist",
+        "dialogue": "We must move forward to panel 3!",
+        "caption": "Part 3 \u2014 The adventure unfolds under a dramatic sky.",
+        "mood": "excited",
+        "characters": [
+          "Protagonist"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\773b7736-8676-4c43-b9ea-3035595a8526\\panel_03_94cfb867-1897-43cd-9376-586a6bb041fd.png",
+        "image_url": "/static/generated/773b7736-8676-4c43-b9ea-3035595a8526/panel_03_94cfb867-1897-43cd-9376-586a6bb041fd.png"
+      }
+    ]
+  },
+  "layout_template": "classic",
+  "assembled_image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\773b7736-8676-4c43-b9ea-3035595a8526\\assembled.png",
+  "assembled_image_url": "/static/generated/773b7736-8676-4c43-b9ea-3035595a8526/assembled.png",
+  "created_at": "2026-10-05T16:47:41.449898+00:00"
+}

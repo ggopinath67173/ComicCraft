@@ -1,0 +1,73 @@
+{
+  "id": "d1a71bf0-69a4-43a7-8c4d-8447f0075f4c",
+  "script": {
+    "id": "acbaab17-4b7b-43d3-95fb-a54269b26c5c",
+    "title": "A brave cat explores a neon alley in Neo",
+    "logline": "A brave cat explores a neon alley in Neo-Tokyo.",
+    "genre": "cyberpunk",
+    "art_style": "manga",
+    "color_palette": "midnight blue, neon purple, ember amber",
+    "panels": [
+      {
+        "id": "597ad8af-1799-43db-bd0b-4de865ffe1e6",
+        "panel_number": 1,
+        "description": "Panel 1: A vivid manga scene depicting A brave cat explores a neon alley in Neo-Tokyo. - Stage 1 of the journey.",
+        "speaker": "Protagonist",
+        "dialogue": "We must move forward to panel 1!",
+        "caption": "Part 1 \u2014 The adventure unfolds under a dramatic sky.",
+        "mood": "mysterious",
+        "characters": [
+          "Protagonist"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\d1a71bf0-69a4-43a7-8c4d-8447f0075f4c\\panel_01_597ad8af-1799-43db-bd0b-4de865ffe1e6.png",
+        "image_url": "/static/generated/d1a71bf0-69a4-43a7-8c4d-8447f0075f4c/panel_01_597ad8af-1799-43db-bd0b-4de865ffe1e6.png"
+      },
+      {
+        "id": "2b473a4c-216c-4030-8c12-1bb179abd081",
+        "panel_number": 2,
+        "description": "Panel 2: A vivid manga scene depicting A brave cat explores a neon alley in Neo-Tokyo. - Stage 2 of the journey.",
+        "speaker": "",
+        "dialogue": "",
+        "caption": "Part 2 \u2014 The adventure unfolds under a dramatic sky.",
+        "mood": "tense",
+        "characters": [
+          "Protagonist"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\d1a71bf0-69a4-43a7-8c4d-8447f0075f4c\\panel_02_2b473a4c-216c-4030-8c12-1bb179abd081.png",
+        "image_url": "/static/generated/d1a71bf0-69a4-43a7-8c4d-8447f0075f4c/panel_02_2b473a4c-216c-4030-8c12-1bb179abd081.png"
+      },
+      {
+        "id": "21f1fc08-f4ca-4ffc-a3e6-01a0af07ddb4",
+        "panel_number": 3,
+        "description": "Panel 3: A vivid manga scene depicting A brave cat explores a neon alley in Neo-Tokyo. - Stage 3 of the journey.",
+        "speaker": "Protagonist",
+        "dialogue": "We must move forward to panel 3!",
+        "caption": "Part 3 \u2014 The adventure unfolds under a dramatic sky.",
+        "mood": "excited",
+        "characters": [
+          "Protagonist"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\d1a71bf0-69a4-43a7-8c4d-8447f0075f4c\\panel_03_21f1fc08-f4ca-4ffc-a3e6-01a0af07ddb4.png",
+        "image_url": "/static/generated/d1a71bf0-69a4-43a7-8c4d-8447f0075f4c/panel_03_21f1fc08-f4ca-4ffc-a3e6-01a0af07ddb4.png"
+      },
+      {
+        "id": "347df545-1a6c-4aa4-9529-08da0cc09cd9",
+        "panel_number": 4,
+        "description": "Panel 4: A vivid manga scene depicting A brave cat explores a neon alley in Neo-Tokyo. - Stage 4 of the journey.",
+        "speaker": "",
+        "dialogue": "",
+        "caption": "Part 4 \u2014 The adventure unfolds under a dramatic sky.",
+        "mood": "dramatic",
+        "characters": [
+          "Protagonist"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\d1a71bf0-69a4-43a7-8c4d-8447f0075f4c\\panel_04_347df545-1a6c-4aa4-9529-08da0cc09cd9.png",
+        "image_url": "/static/generated/d1a71bf0-69a4-43a7-8c4d-8447f0075f4c/panel_04_347df545-1a6c-4aa4-9529-08da0cc09cd9.png"
+      }
+    ]
+  },
+  "layout_template": "classic",
+  "assembled_image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\d1a71bf0-69a4-43a7-8c4d-8447f0075f4c\\assembled.png",
+  "assembled_image_url": "/static/generated/d1a71bf0-69a4-43a7-8c4d-8447f0075f4c/assembled.png",
+  "created_at": "2026-10-05T16:44:40.867004+00:00"
+}

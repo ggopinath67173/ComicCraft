@@ -1,0 +1,3 @@
+"""
+ComicCraft tests.
+"""

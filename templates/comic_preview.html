@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ comic.script.title if comic.script else 'Comic Preview' }} — ComicCraftAI</title>
+  <meta name="description" content="Preview your AI-generated comic: {{ comic.script.logline if comic.script else '' }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    .regen-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 500;
+      background: rgba(13, 13, 43, 0.95);
+      border: 1px solid var(--border-bright);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .regen-toast.visible { transform: none; opacity: 1; }
+    .regen-spinner {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(167,139,250,0.3);
+      border-top-color: var(--accent-light);
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+
+    .assembled-sticky {
+      position: sticky;
+      top: 80px;
+    }
+
+    .caption-badge {
+      display: inline-block;
+      background: rgba(255, 220, 0, 0.12);
+      border: 1px solid rgba(255, 220, 0, 0.3);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ──────────────────────────────────────────────────────────── -->
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="navbar-inner">
+      <a href="/" class="navbar-brand">ComicCraftAI <span class="navbar-badge">AI</span></a>
+      <div class="flex gap-12 align-items-center">
+        <a href="/" class="btn btn-secondary btn-sm">← New Comic</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Page Header ─────────────────────────────────────────────────────── -->
+  <header class="page-header" aria-labelledby="comic-title-heading">
+    <div class="page-header-inner">
+      <div>
+        <h1 id="comic-title-heading" class="page-title">
+          {{ comic.script.title if comic.script else 'Your Comic' }}
+        </h1>
+        {% if comic.script and comic.script.logline %}
+        <p style="color:var(--text-secondary); font-size:1rem; margin-top:8px; font-style:italic;">
+          "{{ comic.script.logline }}"
+        </p>
+        {% endif %}
+        <div class="page-meta" style="margin-top:14px;">
+          {% if comic.script %}
+          <span class="meta-chip">🎌 {{ comic.script.art_style | capitalize }}</span>
+          <span class="meta-chip">{{ comic.script.genre | capitalize }}</span>
+          <span class="meta-chip">📋 {{ comic.script.panels | length }} Panels</span>
+          <span class="meta-chip">🗂️ {{ comic.layout_template | capitalize }}</span>
+          {% if comic.script.color_palette %}
+          <span class="meta-chip">🎨 {{ comic.script.color_palette }}</span>
+          {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="flex gap-12" style="flex-shrink:0; flex-wrap:wrap;">
+        <button
+          id="export-btn"
+          class="btn btn-gold"
+          aria-label="Export this comic"
+          onclick="document.getElementById('export-section').scrollIntoView({behavior:'smooth'})"
+        >
+          📥 Export
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-bottom: 80px;">
+
+    <!-- ── Two-column layout: assembled + panels ────────────────────────── -->
+    <div style="display:grid; grid-template-columns: 1fr 1.6fr; gap:32px; align-items:start;" class="preview-grid">
+
+      <!-- Left: Assembled comic image -->
+      <aside class="assembled-sticky" aria-label="Assembled comic page">
+        <div class="section-title">Assembled Page</div>
+
+        {% if comic.assembled_image_url %}
+        <div class="assembled-frame">
+          <img
+            id="assembled-img"
+            src="{{ comic.assembled_image_url }}"
+            alt="Assembled comic page for {{ comic.script.title if comic.script else 'your comic' }}"
+            loading="lazy"
+          />
+        </div>
+        {% else %}
+        <div class="glass-card flex-center" style="padding:40px; text-align:center;">
+          <p style="color:var(--text-muted);">Assembly image not available.</p>
+        </div>
+        {% endif %}
+
+        <!-- Quick info card -->
+        {% if comic.script %}
+        <div class="glass-card" style="padding:18px; margin-top:16px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.6;">
+            <strong style="color:var(--text-secondary);">ID:</strong>
+            <code style="font-size:0.75rem; color:var(--accent-light);">{{ comic.id[:12] }}…</code>
+            &nbsp;·&nbsp;
+            <strong style="color:var(--text-secondary);">Created:</strong>
+            {{ comic.created_at[:10] }}
+          </p>
+        </div>
+        {% endif %}
+      </aside>
+
+      <!-- Right: Panel details -->
+      <section aria-labelledby="panels-heading">
+        <div id="panels-heading" class="section-title">Individual Panels</div>
+
+        {% if comic.script and comic.script.panels %}
+        <div class="panels-grid" id="panels-grid">
+
+          {% for panel in comic.script.panels %}
+          <article
+            class="panel-card animate-fade-up"
+            id="panel-card-{{ panel.id }}"
+            data-panel-id="{{ panel.id }}"
+            style="animation-delay: {{ loop.index0 * 0.08 }}s;"
+            aria-label="Panel {{ panel.panel_number }}"
+          >
+            <!-- Image -->
+            <div class="panel-image-wrap">
+              {% if panel.image_url %}
+              <img
+                id="panel-img-{{ panel.id }}"
+                src="{{ panel.image_url }}"
+                alt="Panel {{ panel.panel_number }}: {{ panel.description[:80] }}"
+                loading="lazy"
+              />
+              {% else %}
+              <div class="flex-center" style="height:100%; background:var(--bg-deep); min-height:200px;">
+                <span style="font-size:3rem; opacity:0.3;">🖼️</span>
+              </div>
+              {% endif %}
+
+              <!-- Panel number badge -->
+              <div class="panel-badge">Panel {{ panel.panel_number }}</div>
+
+              <!-- Hover overlay -->
+              <div class="panel-overlay" aria-hidden="true">
+                <button
+                  class="btn btn-secondary btn-sm"
+                  onclick="regeneratePanel('{{ comic.id }}', '{{ panel.id }}')"
+                  aria-label="Regenerate image for panel {{ panel.panel_number }}"
+                  title="Regenerate panel image"
+                >
+                  🔄 Regen
+                </button>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="panel-body">
+              {% if panel.caption %}
+              <div class="caption-badge">📌 CAPTION</div>
+              <p style="font-size:0.82rem; color:var(--gold); margin-bottom:8px; font-style:italic;">
+                {{ panel.caption }}
+              </p>
+              {% endif %}
+
+              <p class="panel-description">{{ panel.description }}</p>
+
+              {% if panel.dialogue %}
+              <div class="panel-dialogue">
+                {% if panel.speaker %}
+                <span class="panel-speaker">{{ panel.speaker }}</span>
+                {% endif %}
+                "{{ panel.dialogue }}"
+              </div>
+              {% endif %}
+
+              <!-- Mood chip -->
+              <div style="margin-top:10px;">
+                <span class="meta-chip" style="font-size:0.7rem;">
+                  {{ panel.mood | capitalize }}
+                </span>
+                {% for char in panel.characters[:3] %}
+                <span class="meta-chip" style="font-size:0.7rem; margin-left:4px;">
+                  👤 {{ char }}
+                </span>
+                {% endfor %}
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+
+        </div><!-- end panels-grid -->
+        {% else %}
+        <div class="glass-card flex-center" style="padding:48px; text-align:center;">
+          <div>
+            <p style="font-size:2rem; margin-bottom:16px;">😕</p>
+            <p style="color:var(--text-muted);">No panels found for this comic.</p>
+          </div>
+        </div>
+        {% endif %}
+      </section>
+    </div>
+
+    <!-- ── Export Section ───────────────────────────────────────────────── -->
+    <section id="export-section" class="section" style="margin-top:48px;" aria-labelledby="export-heading">
+      <div id="export-heading" class="section-title">Export Your Comic</div>
+
+      <div class="glass-card" style="padding:32px;">
+        <div id="export-error" class="error-banner" role="alert" style="margin-bottom:20px;"></div>
+
+        <div class="export-grid" id="export-grid" role="group" aria-label="Select export format">
+          <div class="export-option selected" data-format="pdf" role="radio" aria-checked="true" tabindex="0">
+            <div class="export-icon">📄</div>
+            <div class="export-name">PDF</div>
+            <div class="export-desc">Full page with panel breakdown. Print-ready.</div>
+          </div>
+          <div class="export-option" data-format="png" role="radio" aria-checked="false" tabindex="0">
+            <div class="export-icon">🖼️</div>
+            <div class="export-name">PNG</div>
+            <div class="export-desc">Single high-res assembled image.</div>
+          </div>
+          <div class="export-option" data-format="zip" role="radio" aria-checked="false" tabindex="0">
+            <div class="export-icon">📦</div>
+            <div class="export-name">ZIP</div>
+            <div class="export-desc">All individual panel images bundled.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:28px; display:flex; gap:14px; flex-wrap:wrap;">
+          <button id="do-export-btn" class="btn btn-gold btn-lg" aria-label="Export comic now">
+            📥 &nbsp;Download Comic
+          </button>
+          <a href="/" class="btn btn-secondary btn-lg">
+            🎨 &nbsp;Create Another
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Regen Toast ──────────────────────────────────────────────────────── -->
+  <div id="regen-toast" class="regen-toast" role="status" aria-live="polite">
+    <div class="regen-spinner" aria-hidden="true"></div>
+    <span id="regen-toast-msg">Regenerating panel…</span>
+  </div>
+
+  <!-- ── JavaScript ──────────────────────────────────────────────────────── -->
+  <script>
+    const COMIC_ID = '{{ comic.id }}';
+
+    // ── Export format picker ──────────────────────────────────────────────────
+    let selectedFormat = 'pdf';
+
+    document.getElementById('export-grid').querySelectorAll('.export-option').forEach(el => {
+      el.addEventListener('click', () => {
+        document.getElementById('export-grid').querySelectorAll('.export-option').forEach(e => {
+          e.classList.remove('selected');
+          e.setAttribute('aria-checked', 'false');
+        });
+        el.classList.add('selected');
+        el.setAttribute('aria-checked', 'true');
+        selectedFormat = el.dataset.format;
+      });
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+      });
+    });
+
+    // ── Toast helpers ─────────────────────────────────────────────────────────
+    function showToast(msg) {
+      const toast = document.getElementById('regen-toast');
+      document.getElementById('regen-toast-msg').textContent = msg;
+      toast.classList.add('visible');
+    }
+
+    function hideToast(delay = 0) {
+      setTimeout(() => {
+        document.getElementById('regen-toast').classList.remove('visible');
+      }, delay);
+    }
+
+    // ── Regenerate panel ──────────────────────────────────────────────────────
+    async function regeneratePanel(comicId, panelId) {
+      showToast('Regenerating panel…');
+
+      try {
+        const res = await fetch('/regenerate-panel', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ comic_id: comicId, panel_id: panelId }),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // Update panel image with cache-bust
+          const panelImg = document.getElementById(`panel-img-${panelId}`);
+          if (panelImg) panelImg.src = data.image_url + '?t=' + Date.now();
+
+          // Update assembled image
+          const assembled = document.getElementById('assembled-img');
+          if (assembled && data.assembled_url) {
+            assembled.src = data.assembled_url + '?t=' + Date.now();
+          }
+          showToast('✅ Panel regenerated!');
+          hideToast(2000);
+        } else {
+          showToast('⚠️ ' + (data.error || 'Regen failed'));
+          hideToast(3000);
+        }
+      } catch (err) {
+        showToast('⚠️ Network error. Try again.');
+        hideToast(3000);
+      }
+    }
+
+    // ── Export ────────────────────────────────────────────────────────────────
+    document.getElementById('do-export-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('do-export-btn');
+      const errBanner = document.getElementById('export-error');
+      errBanner.classList.remove('visible');
+
+      btn.disabled = true;
+      btn.textContent = '⏳ Exporting…';
+
+      try {
+        const res = await fetch('/export', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ comic_id: COMIC_ID, format: selectedFormat }),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          window.location.href = data.redirect;
+        } else {
+          errBanner.textContent = '⚠️ ' + (data.error || 'Export failed.');
+          errBanner.classList.add('visible');
+          btn.disabled = false;
+          btn.innerHTML = '📥 &nbsp;Download Comic';
+        }
+      } catch (err) {
+        errBanner.textContent = '⚠️ Network error. Please try again.';
+        errBanner.classList.add('visible');
+        btn.disabled = false;
+        btn.innerHTML = '📥 &nbsp;Download Comic';
+      }
+    });
+
+    // ── Responsive: stack grid on small screens ───────────────────────────────
+    function applyResponsiveGrid() {
+      const grid = document.querySelector('.preview-grid');
+      if (!grid) return;
+      if (window.innerWidth < 900) {
+        grid.style.gridTemplateColumns = '1fr';
+      } else {
+        grid.style.gridTemplateColumns = '1fr 1.6fr';
+      }
+    }
+    applyResponsiveGrid();
+    window.addEventListener('resize', applyResponsiveGrid);
+  </script>
+
+</body>
+</html>

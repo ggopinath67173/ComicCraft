@@ -1,0 +1,73 @@
+{
+  "id": "c6d451b9-49f6-422f-9bef-c0c2f137d9e3",
+  "script": {
+    "id": "1b305a26-11f0-49da-9452-65a3b30a6094",
+    "title": "The Ember Tail",
+    "logline": "A brave young fox discovers a glowing celestial map hidden deep within the ancient forest.",
+    "genre": "adventure",
+    "art_style": "anime",
+    "color_palette": "emerald green, glowing amber, twilight violet, celestial gold",
+    "panels": [
+      {
+        "id": "bb43cb1c-1358-42d0-8e3e-c8f9760605a2",
+        "panel_number": 1,
+        "description": "Wide angle shot of a vibrant, magical forest at twilight. In the foreground, a brave little red fox with bright, intelligent eyes stands proudly atop a mossy boulder, looking out over the canopy. Anime style, soft volumetric lighting filtering through ancient trees.",
+        "speaker": "Rin",
+        "dialogue": "Tonight, the forest holds its breath. I can feel it.",
+        "caption": "The deep woods never sleep... and neither does curiosity.",
+        "mood": "mysterious",
+        "characters": [
+          "Rin"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\c6d451b9-49f6-422f-9bef-c0c2f137d9e3\\panel_01_bb43cb1c-1358-42d0-8e3e-c8f9760605a2.png",
+        "image_url": "/static/generated/c6d451b9-49f6-422f-9bef-c0c2f137d9e3/panel_01_bb43cb1c-1358-42d0-8e3e-c8f9760605a2.png"
+      },
+      {
+        "id": "11922d58-c812-4136-a2a6-894af920e33b",
+        "panel_number": 2,
+        "description": "Medium shot. Rin's ears perk up sharply as a strange, ethereal blue light begins to emanate from a hollow tree trunk a few feet away. Action lines emphasize the sudden movement, dramatic low angle.",
+        "speaker": "Rin",
+        "dialogue": "What's that shining so brightly?",
+        "caption": "",
+        "mood": "tense",
+        "characters": [
+          "Rin"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\c6d451b9-49f6-422f-9bef-c0c2f137d9e3\\panel_02_11922d58-c812-4136-a2a6-894af920e33b.png",
+        "image_url": "/static/generated/c6d451b9-49f6-422f-9bef-c0c2f137d9e3/panel_02_11922d58-c812-4136-a2a6-894af920e33b.png"
+      },
+      {
+        "id": "67086947-a3ce-4e8a-8d71-94f85c714c02",
+        "panel_number": 3,
+        "description": "Close-up on Rin cautiously approaching the tree, sniffing a glowing golden parchment that floats in mid-air, casting a warm light on the fox's face. Shimmering particle effects float around. Dramatic anime eye-gint glint.",
+        "speaker": "Rin",
+        "dialogue": "A map of the stars... right here on earth?",
+        "caption": "",
+        "mood": "excited",
+        "characters": [
+          "Rin"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\c6d451b9-49f6-422f-9bef-c0c2f137d9e3\\panel_03_67086947-a3ce-4e8a-8d71-94f85c714c02.png",
+        "image_url": "/static/generated/c6d451b9-49f6-422f-9bef-c0c2f137d9e3/panel_03_67086947-a3ce-4e8a-8d71-94f85c714c02.png"
+      },
+      {
+        "id": "9d4f800c-7a21-4d37-9f87-855d5f16eecf",
+        "panel_number": 4,
+        "description": "Full body shot. Rin snatches the glowing parchment in his jaws, tail wagging with adventurous determination, turning back toward the deep forest trail. Epic cinematic angle, sun breaking through the trees.",
+        "speaker": "Rin",
+        "dialogue": "Let's see where this trail leads!",
+        "caption": "And so, the greatest journey began.",
+        "mood": "dramatic",
+        "characters": [
+          "Rin"
+        ],
+        "image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\c6d451b9-49f6-422f-9bef-c0c2f137d9e3\\panel_04_9d4f800c-7a21-4d37-9f87-855d5f16eecf.png",
+        "image_url": "/static/generated/c6d451b9-49f6-422f-9bef-c0c2f137d9e3/panel_04_9d4f800c-7a21-4d37-9f87-855d5f16eecf.png"
+      }
+    ]
+  },
+  "layout_template": "classic",
+  "assembled_image_path": "C:\\Users\\niras\\OneDrive\\Documents\\ComicCraftAI\\static\\generated\\c6d451b9-49f6-422f-9bef-c0c2f137d9e3\\assembled.png",
+  "assembled_image_url": "/static/generated/c6d451b9-49f6-422f-9bef-c0c2f137d9e3/assembled.png",
+  "created_at": "2026-10-05T17:24:10.435064+00:00"
+}
